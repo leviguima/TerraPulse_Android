@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0d1b2a">
+
+    <!-- Barra superior: IP do ESP32 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#0a1520"
+        android:gravity="center_vertical"
+        android:paddingStart="14dp"
+        android:paddingEnd="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ESP32: "
+            android:textColor="#90a4ae"
+            android:textSize="12sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/tvIp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="192.168.15.2"
+            android:textColor="#00d4ff"
+            android:textSize="13sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/tvConexao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="●"
+            android:textColor="#546e7a"
+            android:textSize="16sp"
+            android:paddingEnd="4dp" />
+
+        <Button
+            android:id="@+id/btnEditIp"
+            android:layout_width="72dp"
+            android:layout_height="34dp"
+            android:text="Editar"
+            android:textSize="11sp"
+            android:textColor="#000000"
+            android:backgroundTint="#00d4ff"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp" />
+
+    </LinearLayout>
+
+    <!-- WebView (Dashboard) -->
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible" />
+
+    <!-- Tela OTA — selecionar .bin da pasta Downloads e enviar para ESP32 -->
+    <ScrollView
+        android:id="@+id/otaView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:background="#0d1b2a">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Atualizar Firmware"
+                android:textColor="#00d4ff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecione o arquivo .bin da pasta Downloads"
+                android:textColor="#90a4ae"
+                android:textSize="12sp"
+                android:paddingBottom="20dp" />
+
+            <!-- Botão selecionar arquivo -->
+            <Button
+                android:id="@+id/btnSelecionarFirmware"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="📂  Selecionar firmware (.bin)"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:backgroundTint="#00d4ff" />
+
+            <!-- Nome e tamanho do arquivo selecionado -->
+            <TextView
+                android:id="@+id/tvFirmwareNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#00c853"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:paddingTop="10dp"
+                android:paddingBottom="4dp"
+                android:gravity="center"
+                android:visibility="gone" />
+
+            <!-- Botão enviar -->
+            <Button
+                android:id="@+id/btnEnviarFirmware"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="🚀  Enviar para o ESP32"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:backgroundTint="#00c853"
+                android:layout_marginTop="10dp"
+                android:enabled="false" />
+
+            <!-- Instrução -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="O ESP32 precisa estar com a janela OTA aberta\n(90s após ligar, enquanto o indicador ● estiver verde)"
+                android:textColor="#546e7a"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="16dp" />
+
+            <!-- Progresso -->
+            <TextView
+                android:id="@+id/tvProgLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#90a4ae"
+                android:textSize="11sp"
+                android:paddingTop="4dp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_marginTop="4dp"
+                android:progressTint="#00d4ff"
+                android:progressBackgroundTint="#263547"
+                android:max="100"
+                android:visibility="gone" />
+
+            <!-- Status resultado -->
+            <LinearLayout
+                android:id="@+id/statusCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1b2a3b"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:layout_marginTop="14dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#e0e0e0"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Navegação inferior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#0a1520"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tabDash"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📊"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/lblDash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:textSize="10sp"
+                android:textColor="#00d4ff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabOta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🚀"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/lblOta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firmware"
+                android:textSize="10sp"
+                android:textColor="#546e7a" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

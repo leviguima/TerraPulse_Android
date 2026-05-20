@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Permite HTTP para qualquer IP local (192.168.x.x / 10.x.x.x) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">192.168.0.1</domain>
+    </domain-config>
+    <!-- Permite HTTP para todos os hosts (necessário pois o IP do ESP32 é dinâmico) -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
